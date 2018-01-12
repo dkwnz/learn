@@ -100,3 +100,47 @@ def partext(path):
                 url.append(each.get('href'))
         return text,url
 		
+def filterwords():
+    words = set('')
+    f = open('filtered_words.txt', 'rb')
+    for l in f.readlines():
+        words.add(l.strip().decode('utf-8'))
+    f.close()
+    w = input('enter your words: ')
+    if w in words:
+        print('Freedom')
+    else:
+        print('Human Rights')
+filterwords()
+
+
+def replaced():
+    w = input()
+    words = []
+    file = open('filtered_words.txt', 'rb')
+    for line in file.readlines():
+        words.append(line.strip().decode('utf-8'))
+    file.close()
+    for word in words:
+        if word in w:
+            w = w.replace(word, '**')
+    return w
+	
+def down():
+    url ="http://tieba.baidu.com/p/2166231880"
+    save_path = 'pic'
+    html = requests.get(url)
+    soup = BeautifulSoup(html.text,'html.parser')
+    picl = soup.select('.BDE_Image')
+    counter = 1
+    for pl in picl:
+        urlp = pl.get('src')
+        pic = requests.get(urlp).content
+        postfix = urlp[urlp.rfind('.'):]
+        file = open(r'pic/'+save_path+str(counter)+postfix,'wb')
+        try:
+            file.write(pic)
+        finally:
+            file.close()
+        counter += 1
+    print('下载了：%d张'%counter)
