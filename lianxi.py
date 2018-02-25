@@ -1,5 +1,7 @@
 import string
 import random
+import json
+import xlwt
 from PIL import Image, ImageFont, ImageDraw
 from bs4 import BeautifulSoup
 import os
@@ -144,3 +146,37 @@ def down():
             file.close()
         counter += 1
     print('下载了：%d张'%counter)
+	
+def wxl():
+    with open(r'student.txt') as f:
+        content = f.read()
+    j = json.loads(content)
+    file = xlwt.Workbook()
+    table = file.add_sheet('test')
+    for row, i in enumerate(list(d)):
+        table.write(row, 0, i)
+        for col, j in enumerate(d[i]):
+            table.write(row, col+1, j)
+    file.save('student.xls')
+	
+def wtxl():
+    with open(r'city.txt') as f:
+        content = f.read()
+    j = json.load(content)
+    file = xlwt.Workbook()
+    table = file.add_sheet('city')
+    for row, i in enumerate(list(d)):
+        table.write(row, 0, i)
+        table.write(row, 1, d[i])
+    file.save('city.xls')
+	
+def wlxl():
+    with open(r'num.txt') as f:
+        content = f.read()
+    j = json.load(content)
+    file = xlwt.Workbook()
+    table = file.add_sheet('city')
+    for row, i in enumerate(d):
+        for col,j in enumerate(i):
+            table.write(row, col, j)
+    file.save('num.xls')
